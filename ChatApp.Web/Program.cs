@@ -1,3 +1,4 @@
+using ChatApp.Infrastructure.Db;
 using ChatApp.Web.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,6 +6,15 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddSignalR();
+
+//Dependency Injections 
+string connectionString = builder.Configuration.GetSection("MongoDBSettings:ConnectionString").Value!;
+string databaseName = builder.Configuration.GetSection("MongoDBSettings:DatabaseName").Value!;
+
+
+builder.Services.AddScoped(opt =>
+    new MongoDbConnection(connectionString, databaseName)
+);
 
 var app = builder.Build();
 
