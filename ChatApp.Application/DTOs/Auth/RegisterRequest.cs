@@ -21,7 +21,7 @@ public class RegisterRequest
     public string? Phone { get; set; }
 
     [Required]
-    public DateTime Dob { get; set; }
+    public DateTime DoB { get; set; }
 
     [Required]
     public Gender Gender { get; set;}

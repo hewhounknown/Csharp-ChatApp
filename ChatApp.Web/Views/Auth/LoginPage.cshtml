@@ -1,0 +1,42 @@
+@{
+    ViewData["Title"] = "Login Page";
+}
+
+<div class="row justify-content-center">
+        <form method="POST" action="" class="card col-sm-6 m-5 p-4">
+
+            <!-- Email Address -->
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input id="email" class="form-control" type="email" name="email" value="" required />
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input id="password" class="form-control" type="password" name="password" required />
+            </div>
+
+            <div class="row mb-4">
+                <div class="col d-flex justify-content-center">
+                <!-- Remember Me -->
+                  <div class="form-check">
+                      <input id="remember_me" type="checkbox" class="form-check-input" name="remember">
+                      <label for="remember_me" class="form-check-label">Remember me</label>
+                  </div>
+                </div>
+
+                <div class="col">
+                    <!-- forget password -->
+                    <a href="#!">Forgot password?</a>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+
+            <div class="text-center">
+                <p>if you don't have a account <a href="/Auth/RegisterPage">Register here</a></p>
+            </div>
+
+        </form>
+    </div>
