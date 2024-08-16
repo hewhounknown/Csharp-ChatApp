@@ -10,33 +10,38 @@ public class AuthController : Controller
 
   public AuthController(IAuth auth)
   {
-    _auth = auth;
-  }
-
-  public async Task<IActionResult> LoginPage()
-  {
-    return View();
+      _auth = auth;
   }
 
   public async Task<IActionResult> Login()
   {
+      return View();
+  }
+
+  [HttpPost]
+  public async Task<IActionResult> Login(LoginRequest req)
+  {
+    if (ModelState.IsValid)
+    {
+      return View(req);
+    }
     return View();
   }
 
-  public async Task<IActionResult> RegisterPage()
+  public async Task<IActionResult> Register()
   {
-    return View();
+      return View();
   }
 
   [HttpPost]
   public async Task<IActionResult> Register(RegisterRequest req)
   {
-    MessageResponse res = await _auth.Register(req);
 
-    if( res.Success is false)
+    if (!ModelState.IsValid)
     {
-      return View("/Auth/RegisterPage");
+      return View(req);
     }
-    return View("/Auth/LoginPage");
+
+    return View("Login");
   }
 }

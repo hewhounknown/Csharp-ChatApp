@@ -4,19 +4,21 @@
 }
 
 <div class="row justify-content-center">
-        <form method="POST" action="" class="card col-sm-6 m-5 p-4">
+    <form method="POST" asp-action="Login" class="card col-sm-6 m-5 p-4">
 
             <!-- Email Address -->
             <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input id="email" class="form-control" type="email" name="email" value="" required />
+                <label asp-for="Email" class="form-label">Email</label>
+                <input asp-for="Email" class="form-control" type="email" required />
+                <span asp-validation-for="Email" class="text-danger"></span>
             </div>
 
             <!-- Password -->
             <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-            <input id="password" class="form-control" type="password" name="password" value="" required />
-        </div>
+                <label asp-for="Password" class="form-label">Password</label>
+                <input asp-for="Password" class="form-control" type="password" required />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
 
             <div class="row mb-4">
                 <div class="col d-flex justify-content-center">
@@ -36,7 +38,7 @@
             <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
 
             <div class="text-center">
-                <p>if you don't have a account <a href="/Auth/RegisterPage">Register here</a></p>
+                <p>if you don't have a account <a href="/Auth/Register">Register here</a></p>
             </div>
 
         </form>
