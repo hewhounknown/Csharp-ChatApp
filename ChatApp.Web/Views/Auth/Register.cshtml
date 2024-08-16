@@ -1,6 +1,14 @@
 @model RegisterRequest;
 @{
     ViewData["Title"] = "Register";
+
+    MessageResponse msg = null;
+    if(TempData["Message"] != null)
+    {
+        var json = TempData["Message"].ToString();
+        msg = JsonConvert.DeserializeObject<MessageResponse>(json);
+
+    }
 }
 
 <div class="row justify-content-center">
@@ -64,3 +72,16 @@
         </div>
     </form>
 </div>
+
+@section Scripts{
+  @if(msg != null){
+    <script>
+            Swal.fire({
+                title: 'Try Again!',
+                text: '@msg.Message',
+                icon: 'warning',
+                confirmButtonText: 'Ok'
+            })
+    </script>
+  }
+}

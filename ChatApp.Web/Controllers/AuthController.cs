@@ -1,6 +1,7 @@
 using ChatApp.Application.DTOs.Auth;
 using ChatApp.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace ChatApp.Web.Controllers;
 
@@ -42,6 +43,14 @@ public class AuthController : Controller
       return View(req);
     }
 
+    var response = await _auth.Register(req);
+
+    TempData["Message"] = JsonConvert.SerializeObject(response);
+
+    if (!response.IsSuccess)
+    {
+      return View();
+    }
     return View("Login");
   }
 }

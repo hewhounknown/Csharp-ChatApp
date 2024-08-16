@@ -1,6 +1,14 @@
 @model LoginRequest;
 @{
     ViewData["Title"] = "Login";
+
+    MessageResponse msg = null;
+    if (TempData["Message"] != null)
+    {
+        var json = TempData["Message"].ToString();
+        msg = JsonConvert.DeserializeObject<MessageResponse>(json);
+
+    }
 }
 
 <div class="row justify-content-center">
@@ -44,4 +52,17 @@
         </form>
     </div>
 
+@section Scripts {
+    @if (msg != null)
+    {
+        <script>
+            Swal.fire({
+                title: 'register success',
+                text: '@msg.Message',
+                icon: 'info',
+                confirmButtonText: 'Ok'
+            })
+        </script>
+    }
+}
 
