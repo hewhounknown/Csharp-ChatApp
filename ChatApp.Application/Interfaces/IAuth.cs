@@ -1,4 +1,4 @@
-﻿using ChatApp.Application.DTOs.Auth;
+using ChatApp.Application.DTOs.Auth;
 using ChatApp.Application.DTOs.Auth;
 using ChatApp.Domain.Entities;
 using System;
@@ -11,6 +11,6 @@ namespace ChatApp.Application.Interfaces;
 
 public interface IAuth
 {
-    Task<RegisterResponse> Register(RegisterRequest request);
+    Task<MessageResponse> Register(RegisterRequest request);
     Task<User> Login(LoginRequest request);
 }

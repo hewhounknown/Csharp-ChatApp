@@ -1,4 +1,4 @@
-﻿using ChatApp.Application.DTOs.Auth;
+using ChatApp.Application.DTOs.Auth;
 using ChatApp.Application.Interfaces;
 using ChatApp.Application.Mappings;
 using ChatApp.Domain.Entities;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ChatApp.Application.Services;
 
-internal class AuthService : IAuth
+public class AuthService : IAuth
 {
     private readonly IUserRepository _userRepository;
 
@@ -25,27 +25,26 @@ internal class AuthService : IAuth
         throw new NotImplementedException();
     }
      
-    public async Task<RegisterResponse> Register(RegisterRequest request)
+    public async Task<MessageResponse> Register(RegisterRequest request)
     {
         var isExited = await _userRepository.FindAccountByEmail(request.Email);
         if (isExited == CrudResults.AlreadyExisted)
         {
-            return new RegisterResponse().ErrorMessage("there is an account using this email");
+            return new MessageResponse().ErrorMessage("there is an account using this email");
         }
 
         if(request.Password != request.ConfirmPassword)
         {
-            return new RegisterResponse().ErrorMessage("please, make passwords are the same!");
+            return new MessageResponse().ErrorMessage("please, make passwords are the same!");
         }
 
         var res = await _userRepository.CreateAccount(request.Map());
         if(res == CrudResults.Fail)
         {
-            return new RegisterResponse().ErrorMessage("something wrong, can't create account!");
+            return new MessageResponse().ErrorMessage("something wrong, can't create account!");
         }
 
-        return new RegisterResponse().SuccessMessage("registered successful");
+        return new MessageResponse().SuccessMessage("registered successful");
     }
 
 }
- 

@@ -1,4 +1,5 @@
 using ChatApp.Infrastructure.Db;
+using ChatApp.Web;
 using ChatApp.Web.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,8 @@ string databaseName = builder.Configuration.GetSection("MongoDBSettings:Database
 builder.Services.AddScoped(opt =>
     new MongoDbConnection(connectionString, databaseName)
 );
+
+builder.Services.AddServices();  
 
 var app = builder.Build();
 
