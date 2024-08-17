@@ -1,7 +1,7 @@
 using ChatApp.Application.DTOs.Auth;
 using ChatApp.Application.Interfaces;
+using ChatApp.Application.Interfaces.Repositories;
 using ChatApp.Application.Mappings;
-using ChatApp.Domain.Entities;
 using ChatApp.Domain.Enums;
 using System;
 using System.Collections.Generic;
@@ -20,15 +20,22 @@ public class AuthService : IAuth
         _userRepository = userRepository;
     }
 
-    public Task<User> Login(LoginRequest request)
+    public async Task<MessageResponse> Login(LoginRequest request)
     {
-        throw new NotImplementedException();
+        var user = await _userRepository.FindAccountByEmail(request.Email);
+
+        if (user == null)
+        {
+          return new MessageResponse().ErrorMessage("Email or password is incorrect, try again");
+        }
+
+        return new MessageResponse().SuccessMessage("Login Success");
     }
      
     public async Task<MessageResponse> Register(RegisterRequest request)
     {
         var isExited = await _userRepository.FindAccountByEmail(request.Email);
-        if (isExited == CrudResults.AlreadyExisted)
+        if (isExited != null)
         {
             return new MessageResponse().ErrorMessage("there is an account using this email");
         }
@@ -37,7 +44,7 @@ public class AuthService : IAuth
         {
             return new MessageResponse().ErrorMessage("please, make passwords are the same!");
         }
-
+          
         var res = await _userRepository.CreateAccount(request.Map());
         if(res == CrudResults.Fail)
         {

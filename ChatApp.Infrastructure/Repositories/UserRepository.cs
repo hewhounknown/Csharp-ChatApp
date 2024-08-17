@@ -1,4 +1,4 @@
-﻿using ChatApp.Application.Interfaces;
+using ChatApp.Application.Interfaces.Repositories;
 using ChatApp.Domain.Entities;
 using ChatApp.Domain.Enums;
 using ChatApp.Infrastructure.Db;
@@ -38,16 +38,10 @@ public class UserRepository : IUserRepository
         return CrudResults.Fail; 
     }
 
-    public async Task<CrudResults> FindAccountByEmail(string email)
+    public async Task<User> FindAccountByEmail(string email)
     {
         var filter = Builders<User>.Filter.Eq(u => u.Email, email);
-        var isExited = await _usersCollection.Find(filter).FirstOrDefaultAsync();
-
-        if(isExited != null)
-        {
-            return CrudResults.AlreadyExisted;
-        }
-        return CrudResults.NotFound;
+        return await _usersCollection.Find(filter).FirstOrDefaultAsync();
     }
 
     public async Task<CrudResults> UpdateAccount(User user)

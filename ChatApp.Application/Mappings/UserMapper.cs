@@ -1,4 +1,4 @@
-﻿using ChatApp.Application.DTOs.Auth;
+using ChatApp.Application.DTOs.Auth;
 using ChatApp.Domain.Entities;
 using System;
 using System.Collections.Generic;

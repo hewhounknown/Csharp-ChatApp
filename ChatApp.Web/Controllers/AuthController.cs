@@ -26,6 +26,8 @@ public class AuthController : Controller
     {
       return View(req);
     }
+
+    var response = await _auth.Login(req);
     return View();
   }
 
