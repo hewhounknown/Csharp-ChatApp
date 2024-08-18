@@ -16,12 +16,14 @@ public class AuthController : Controller
 
   public async Task<IActionResult> Login()
   {
+    TempData.Clear();
     return View();
   }
 
   [HttpPost]
   public async Task<IActionResult> Login(LoginRequest req)
   {
+
     if (!ModelState.IsValid)
     {
       return View(req);
@@ -34,7 +36,7 @@ public class AuthController : Controller
     {
       return View();
     }
-    return View("~/Views/Chat/Index.cshtml");
+    return RedirectToAction("Index", "Chat");
   }
 
   public async Task<IActionResult> Register()
@@ -59,6 +61,6 @@ public class AuthController : Controller
     {
       return View();
     }
-    return View("Login");
+    return Redirect("/Auth/Login");
   }
 }

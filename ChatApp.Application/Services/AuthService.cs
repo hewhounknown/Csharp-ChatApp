@@ -19,7 +19,7 @@ public class AuthService : IAuth
   {
     var user = await _userRepository.FindAccountByEmail(request.Email);
 
-    if (user == null)
+    if (user == null || user.Password != request.Password)
     {
       return new MessageResponse().ErrorMessage("Email or password is incorrect, try again");
     }
