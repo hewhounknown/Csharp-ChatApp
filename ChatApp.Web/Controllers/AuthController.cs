@@ -22,13 +22,19 @@ public class AuthController : Controller
   [HttpPost]
   public async Task<IActionResult> Login(LoginRequest req)
   {
-    if (ModelState.IsValid)
+    if (!ModelState.IsValid)
     {
       return View(req);
     }
 
     var response = await _auth.Login(req);
-    return View();
+    TempData["Message"] = JsonConvert.SerializeObject(response);
+
+    if (!response.IsSuccess)
+    {
+      return View();
+    }
+    return View("~/Views/Chat/Index.cshtml");
   }
 
   public async Task<IActionResult> Register()

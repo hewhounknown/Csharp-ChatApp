@@ -49,20 +49,34 @@
                 <p>if you don't have a account <a href="/Auth/Register">Register here</a></p>
             </div>
 
-        </form>
-    </div>
+    </form>
+</div>
 
 @section Scripts {
     @if (msg != null)
     {
-        <script>
-            Swal.fire({
-                title: 'register success',
-                text: '@msg.Message',
-                icon: 'info',
-                confirmButtonText: 'Ok'
-            })
-        </script>
+        @if (msg.IsSuccess)
+        {
+            <script>
+                Swal.fire({
+                    title: 'register success',
+                    text: '@msg.Message',
+                    icon: 'info',
+                    confirmButtonText: 'Ok'
+                })
+            </script>
+        }
+        @if (!msg.IsSuccess)
+        {
+            <script>
+                Swal.fire({
+                    title: 'Login failed',
+                    text: '@msg.Message',
+                    icon: 'error',
+                    confirmButtonText: 'Try again'
+                })
+            </script>
+        }
     }
 }
 

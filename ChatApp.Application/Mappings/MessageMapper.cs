@@ -18,6 +18,7 @@ public static class MessageMapper
       Sent = DateTime.Now
     };
   }
+
   public static MessageDTO Map(this Message msg)
   {
     return new MessageDTO()
