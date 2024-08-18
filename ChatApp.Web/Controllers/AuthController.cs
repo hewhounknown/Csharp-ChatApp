@@ -11,12 +11,12 @@ public class AuthController : Controller
 
   public AuthController(IAuth auth)
   {
-      _auth = auth;
+    _auth = auth;
   }
 
   public async Task<IActionResult> Login()
   {
-      return View();
+    return View();
   }
 
   [HttpPost]
@@ -33,7 +33,7 @@ public class AuthController : Controller
 
   public async Task<IActionResult> Register()
   {
-      return View();
+    return View();
   }
 
   [HttpPost]
