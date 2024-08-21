@@ -5,10 +5,11 @@ namespace ChatApp.Application.Mappings;
 
 public static class UserMapper
 {
-  public static User Map(this RegisterRequest request)
+  public static User Entity(this RegisterRequest request)
   {
     return new User()
     {
+      Id = Guid.NewGuid().ToString(),
       Name = request.Name,
       Email = request.Email,
       Phone = request.Phone,

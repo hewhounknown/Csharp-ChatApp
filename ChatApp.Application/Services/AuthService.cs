@@ -40,7 +40,7 @@ public class AuthService : IAuth
       return new MessageResponse().ErrorMessage("please, make passwords are the same!");
     }
 
-    var res = await _userRepository.CreateAccount(request.Map());
+    var res = await _userRepository.CreateAccount(request.Entity());
     if (res == CrudResults.Fail)
     {
       return new MessageResponse().ErrorMessage("something wrong, can't create account!");
