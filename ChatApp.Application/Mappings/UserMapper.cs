@@ -1,3 +1,4 @@
+using ChatApp.Application.DTOs;
 using ChatApp.Application.DTOs.Auth;
 using ChatApp.Domain.Entities;
 
@@ -16,6 +17,20 @@ public static class UserMapper
       DoB = request.DoB,
       Gender = request.Gender,
       Password = request.Password,
+    };
+  }
+
+  public static UserDTO Map(this User user)
+  {
+    return new UserDTO()
+    {
+      Id = user.Id,
+      Name = user.Name,
+      Email = user.Email,
+      Phone = user.Phone,
+      DoB = user.DoB,
+      Gender = user.Gender,
+      Password = user.Password,
     };
   }
 }

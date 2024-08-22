@@ -1,11 +1,21 @@
+using ChatApp.Application.DTOs;
+using ChatApp.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChatApp.Web.Controllers;
 
 public class ChatController : Controller
 {
-  public IActionResult Index()
+  private readonly IChat _chat;
+
+  public ChatController(IChat chat)
   {
-    return View();
+    _chat = chat;
+  }
+
+  public async Task<IActionResult> Index()
+  {
+    List<UserDTO> userList = await _chat.GetAllUsers();
+    return View(userList);
   }
 }

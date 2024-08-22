@@ -39,6 +39,11 @@ public class UserRepository : IUserRepository
     return await _usersCollection.Find(filter).FirstOrDefaultAsync();
   }
 
+  public async Task<List<User>> GetAllAccounts()
+  {
+    return await _usersCollection.Find(user => true).ToListAsync();
+  }
+
   public async Task<CrudResults> UpdateAccount(User user)
   {
     var filter = Builders<User>.Filter.Eq(u => u.Id, user.Id);

@@ -9,4 +9,5 @@ public interface IUserRepository
   Task<CrudResults> UpdateAccount(User user);
   Task<User> FindAccountByEmail(string email);
   Task<CrudResults> DeleteAccount(string accountId);
+  Task<List<User>> GetAllAccounts();
 }

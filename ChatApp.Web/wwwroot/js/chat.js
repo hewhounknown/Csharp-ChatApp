@@ -5,12 +5,12 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 // Disable the send button until connection is established.
 document.getElementById("sendButton").disabled = true;
 
-connection.on("ReceiveMessage", function (user, message) {
+connection.on("ReceiveMessage", function (sender, message) {
   const msg = document.createElement("li");
   msg.classList.add('clearfix');
   msg.innerHTML = `
             <div class="message-data">
-                  <span class="message-data-time">${user}</span>
+                  <span class="message-data-time">${sender}</span>
               </div>
             <div class="message my-message">${message}</div>`;
   document.getElementById("messagesList").appendChild(msg);
@@ -23,12 +23,13 @@ connection.start().then(function () {
 });
 
 document.getElementById("sendButton").addEventListener("click", function (event) {
-  const user = document.getElementById("userInput").value;
+  const sender = document.getElementById("sender").value;
+  const receiver = document.getElementById("receiver").value;
   const message = document.getElementById("messageInput").value;
 
   if (message.trim() === "") return;  // Prevent empty messages
 
-  connection.invoke("SendMessage", user, message).catch(function (err) {
+  connection.invoke("SendMessage", sender, receiver, message).catch(function (err) {
     return console.error(err.toString());
   });
 
