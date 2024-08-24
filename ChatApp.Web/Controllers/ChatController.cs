@@ -14,15 +14,19 @@ public class ChatController : Controller
     _chat = chat;
   }
 
+
+  [Route("Chat/")]
   public async Task<IActionResult> Index()
   {
     model.Users = await _chat.GetAllUsers();
     return View(model);
   }
 
+  [HttpGet]
+  [Route("Chat/{accountId}")]
   public async Task<IActionResult> Chat(string accountId)
   {
     model.User = await _chat.GetUser(accountId);
-    return View("Index", model);
+    return Json(model.User);
   }
 }

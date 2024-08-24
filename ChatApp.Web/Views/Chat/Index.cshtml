@@ -4,42 +4,8 @@
     ViewData["Title"] = "Chat Here";
 }
 
-<div class="chat">
-    <div class="chat-header clearfix">
-        <div class="row">
-            <div class="col-lg-6">
-                <a href="javascript:void(0);">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">
-                </a>
-                <div class="chat-about">
-                    <h6 class="m-b-0">Aiden Chavez</h6>
-                    <small>Last seen: 2 hours ago</small>
-                </div>
-            </div>
-            <div class="col-lg-6 hidden-sm">
-                <div class="float-end">
-                    <a href="javascript:void(0);" class="btn btn-outline-info">
-                        <i class="fa-solid fa-bars"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="chat-history" style="height: 430px; overflow-y: auto;">
-        <ul class="m-b-0" id="messagesList">
-            <!-- Messages will be appended here -->
-        </ul>
-    </div>
-    <div class="chat-message clearfix">
-        <div class="input-group mb-0">
-            <input id="sender" type="hidden" value="senderId" />
-            <input id="receiver" type="hidden" value="receiverId" />
-            <input id="messageInput" type="text" class="form-control" placeholder="Enter text here" />
-            <button id="sendButton" class="btn btn-outline-info" type="button">
-                <i class="fa-solid fa-paper-plane"></i>
-            </button>
-        </div>
-    </div>
+<div class="chat" id="chatPage">
+
 </div>
 @section Scripts{
     <script>
@@ -47,8 +13,71 @@
             $('.friend').on('click', function () {
                 const userId = $(this).attr('id');
                 console.log(userId)
+
+                $.ajax({
+                    type: 'GET',
+                    url: `/Chat/${userId}`, //'@Url.Action("Chat", "Chat")/' + userId
+                    success: function (response) {
+                        console.log(response)
+
+                        if (!response) {
+                            alert("There is something wrong!!")
+                            return;
+                        }
+                        switch (response.gender) {
+                            case 0: //Male
+                                avatarSrc = '/imgs/male.png';
+                                break;
+                            case 1: //Female
+                                avatarSrc = '/imgs/female.png';
+                                break;
+                            default: //Ohter or 3
+                                avatarSrc = '/imgs/user.png';
+                                break;
+                        }
+
+                        $page = `<div class="chat-header clearfix">
+                                  <div class="row">
+                                      <div class="col-lg-6">
+                                          <a href="javascript:void(0);">
+                                              <img src="${avatarSrc}"" alt="avatar">
+                                          </a>
+                                          <div class="chat-about">
+                                              <h6 class="m-b-0">${response.name}</h6>
+                                              <small>Last seen: 2 hours ago</small>
+                                          </div>
+                                      </div>
+                                      <div class="col-lg-6 hidden-sm">
+                                          <div class="float-end">
+                                              <a href="javascript:void(0);" class="btn btn-outline-info">
+                                                  <i class="fa-solid fa-bars"></i>
+                                              </a>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="chat-history" style="height: 430px; overflow-y: auto;">
+                                  <ul class="m-b-0" id="messagesList">
+                                      <!-- Messages will be appended here -->
+                                  </ul>
+                              </div>
+                              <div class="chat-message clearfix">
+                                  <div class="input-group mb-0">
+                                      <input id="sender" type="hidden" value="senderId" />
+                                      <input id="receiver" type="hidden" value="receiverId" />
+                                      <input id="messageInput" type="text" class="form-control" placeholder="Enter text here" />
+                                      <button id="sendButton" class="btn btn-outline-info" type="button">
+                                          <i class="fa-solid fa-paper-plane"></i>
+                                      </button>
+                                  </div>
+                              </div>`;
+
+                        $('#chatPage').html($page);
+                    }
+                })
             })
         })
     </script>
+
     <script src="~/js/chat.js"></script>
 }
