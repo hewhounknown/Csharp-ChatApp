@@ -3,30 +3,6 @@ body {
   margin-bottom: 0;
 }
 
-.card {
-  background: #fff;
-  transition: .5s;
-  border: 0;
-  border-radius: .55rem;
-  position: relative;
-  width: 100%;
-  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
-}
-
-.chat-app .people-list {
-  width: 280px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  padding: 20px;
-  z-index: 7
-}
-
-.chat-app .chat {
-  margin-left: 280px;
-  border-left: 1px solid #eaeaea;
-}
-
 .people-list {
   -moz-transition: .5s;
   -o-transition: .5s;

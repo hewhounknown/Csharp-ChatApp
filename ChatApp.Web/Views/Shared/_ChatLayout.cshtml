@@ -18,41 +18,41 @@
     </head>
     <body>
     <div class="container-fluid">
-        <div class="row" style="height: 100vh">
-            <div class="col-lg-12">
-                <div class="card chat-app">
-                    <div id="plist" class="people-list">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search" />
-                            <span class="input-group-text"><i class="fa fa-search fa-lg"></i></span>
-                        </div>
-                        <ul class="list-unstyled chat-list mt-2 mb-0">
-                            @foreach (var user in Model.Users)
-                            {
-                                <li id="@user.Id" class="clearfix friend">
-                                    @if (user.Gender == ChatApp.Domain.Enums.Gender.Male)
-                                    {
-                                        <img src="~/imgs/male.png" alt="avatar">
-                                    }
-                                    else if (user.Gender == ChatApp.Domain.Enums.Gender.Female)
-                                    {
-                                        <img src="~/imgs/female.png" alt="avatar">
-                                    }
-                                    else
-                                    {
-                                        <img src="~/imgs/user.png" alt="avatar">
-                                    }
-                                    <div class="about">
-                                        <div class="name">@user.Name</div>
-                                        <div class="status"> <i class="fa fa-circle online"></i> online </div>
-                                        @*  <div class="status"> <i class="fa fa-circle offline"></i> left 7 mins ago </div> *@
-                                    </div>
-                                </li>
-                            }
-                        </ul>
-                    </div>
-                    @RenderBody()
-                </div>
+        <div class="row p3" style="height:640px">
+            <div class="col-3 bg-light mt-3 border-end">
+                  <div id="plist" class="people-list">
+                      <div class="input-group">
+                          <input type="text" class="form-control" placeholder="Search" />
+                          <span class="input-group-text"><i class="fa fa-search fa-lg"></i></span>
+                      </div>
+                      <ul class="list-unstyled chat-list mt-2 mb-0">
+                          @foreach (var user in Model.Users)
+                          {
+                              <li id="@user.Id" class="clearfix friend">
+                                  @if (user.Gender == ChatApp.Domain.Enums.Gender.Male)
+                                  {
+                                      <img src="~/imgs/male.png" alt="avatar">
+                                  }
+                                  else if (user.Gender == ChatApp.Domain.Enums.Gender.Female)
+                                  {
+                                      <img src="~/imgs/female.png" alt="avatar">
+                                  }
+                                  else
+                                  {
+                                      <img src="~/imgs/user.png" alt="avatar">
+                                  }
+                                  <div class="about">
+                                      <div class="name">@user.Name</div>
+                                      <div class="status"> <i class="fa fa-circle online"></i> online </div>
+                                      @*  <div class="status"> <i class="fa fa-circle offline"></i> left 7 mins ago </div> *@
+                                  </div>
+                              </li>
+                          }
+                      </ul>
+                  </div>
+            </div>
+            <div class="col-9 bg-white">
+                @RenderBody()
             </div>
         </div>
     </div>

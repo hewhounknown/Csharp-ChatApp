@@ -7,12 +7,17 @@
 <div class="chat" id="chatPage">
 
 </div>
+
+
 @section Scripts{
     <script>
         $(document).ready(function () {
             $('.friend').on('click', function () {
                 const userId = $(this).attr('id');
                 console.log(userId)
+
+                $('.friend').removeClass('active');
+                $(this).addClass('active');
 
                 $.ajax({
                     type: 'GET',
@@ -36,7 +41,7 @@
                                 break;
                         }
 
-                        $page = `<div class="chat-header clearfix">
+                        $page = `<div class="chat-header clearfix pb-2 mb-4 border-bottom border-secondary-subtle">
                                   <div class="row">
                                       <div class="col-lg-6">
                                           <a href="javascript:void(0);">
