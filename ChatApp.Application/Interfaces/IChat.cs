@@ -6,4 +6,5 @@ public interface IChat
 {
   Task<List<UserDTO>> GetAllUsers();
   Task<UserDTO> GetUser(string accountId);
+  Task<UserDTO> GetUserByEmail(string email);
 }

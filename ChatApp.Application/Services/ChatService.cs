@@ -26,4 +26,10 @@ public class ChatService : IChat
     var user = await _userRepository.FindAccountById(accountId);
     return user.Map();
   }
+
+  public async Task<UserDTO> GetUserByEmail(string email)
+  {
+    var user = await _userRepository.FindAccountByEmail(email);
+    return user.Map();
+  }
 }

@@ -8,11 +8,13 @@ namespace ChatApp.Web.Controllers;
 public class AuthController : Controller
 {
   private readonly IAuth _auth;
+  private readonly IChat _chat;
   private readonly ILogger<AuthController> _logger;
 
-  public AuthController(IAuth auth, ILogger<AuthController> logger)
+  public AuthController(IAuth auth, IChat chat, ILogger<AuthController> logger)
   {
     _auth = auth;
+    _chat = chat;
     _logger = logger;
   }
 
@@ -41,8 +43,9 @@ public class AuthController : Controller
       return View();
     }
 
+    var LoginedAcc = await _chat.GetUserByEmail(req.Email);
     _logger.LogInformation($"{req.Email} - log in success.");
-    return RedirectToAction("Index", "Chat");
+    return RedirectToAction("Index", "Chat", LoginedAcc);
   }
 
   public async Task<IActionResult> Register()

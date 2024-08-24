@@ -5,7 +5,9 @@
 }
 
 <div class="chat" id="chatPage">
-
+    <div class="m-4 p-4 text-muted text-center">
+        <h1 class="display-4">Touch someone you want to chat.</h1>
+    </div>
 </div>
 
 
@@ -22,7 +24,7 @@
                 $.ajax({
                     type: 'GET',
                     url: `/Chat/${userId}`, //'@Url.Action("Chat", "Chat")/' + userId
-                    success: function (response) {
+                    success: function (response){
                         console.log(response)
 
                         if (!response) {
@@ -68,8 +70,8 @@
                               </div>
                               <div class="chat-message clearfix">
                                   <div class="input-group mb-0">
-                                      <input id="sender" type="hidden" value="senderId" />
-                                      <input id="receiver" type="hidden" value="receiverId" />
+                                      <input id="sender" type="hidden" value="@Model.Auth.Id" />
+                                      <input id="receiver" type="hidden" value="${response.id}" />
                                       <input id="messageInput" type="text" class="form-control" placeholder="Enter text here" />
                                       <button id="sendButton" class="btn btn-outline-info" type="button">
                                           <i class="fa-solid fa-paper-plane"></i>
