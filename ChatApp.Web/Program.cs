@@ -1,3 +1,4 @@
+using ChatApp.Infrastructure.Cache;
 using ChatApp.Infrastructure.Db;
 using ChatApp.Web;
 using ChatApp.Web.Hubs;
@@ -5,12 +6,20 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-string logFile = builder.Configuration.GetSection("Logging:LogFile").Value!;
+//mongo
 string connectionString = builder.Configuration.GetSection("MongoDBSettings:ConnectionString").Value!;
 string databaseName = builder.Configuration.GetSection("MongoDBSettings:DatabaseName").Value!;
 
+//logger
+string logFile = builder.Configuration.GetSection("Logging:LogFile").Value!;
 string logFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, logFile);
 
+//redis
+string host = builder.Configuration.GetSection("RedisSettings:HostName").Value!;
+string port = builder.Configuration.GetSection("RedisSettings:PortNumber").Value!;
+string password = builder.Configuration.GetSection("RedisSettings:Password").Value!;
+
+//set up logger
 Log.Logger = new LoggerConfiguration()
               .MinimumLevel.Debug()
               .WriteTo.Console()
@@ -25,9 +34,14 @@ try
   builder.Services.AddControllersWithViews();
   builder.Services.AddSignalR();
 
-  //Dependency Injections 
+  //Add mongodb
   builder.Services.AddScoped(opt =>
       new MongoDbConnection(connectionString, databaseName)
+  );
+
+  //Add redis
+  builder.Services.AddScoped(opt =>
+      new Redis(host, port, password)
   );
 
   builder.Services.AddServices();

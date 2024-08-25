@@ -1,5 +1,6 @@
 using ChatApp.Application.DTOs.Auth;
 using ChatApp.Application.Interfaces;
+using ChatApp.Infrastructure.Cache;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -8,13 +9,13 @@ namespace ChatApp.Web.Controllers;
 public class AuthController : Controller
 {
   private readonly IAuth _auth;
-  private readonly IChat _chat;
+  private readonly Redis _redis;
   private readonly ILogger<AuthController> _logger;
 
-  public AuthController(IAuth auth, IChat chat, ILogger<AuthController> logger)
+  public AuthController(IAuth auth, Redis redis, ILogger<AuthController> logger)
   {
     _auth = auth;
-    _chat = chat;
+    _redis = redis;
     _logger = logger;
   }
 
@@ -43,9 +44,9 @@ public class AuthController : Controller
       return View();
     }
 
-    var LoginedAcc = await _chat.GetUserByEmail(req.Email);
+    await _redis.SetString("login-email", req.Email);
     _logger.LogInformation($"{req.Email} - log in success.");
-    return RedirectToAction("Index", "Chat", LoginedAcc);
+    return RedirectToAction("Index", "Chat");
   }
 
   public async Task<IActionResult> Register()

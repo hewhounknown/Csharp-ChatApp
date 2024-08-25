@@ -1,0 +1,62 @@
+
+@{
+    Layout = "~/Views/Shared/_ChatLayout.cshtml";
+    ViewData["Title"] = Model.User.Name;
+
+    string avatarSrc;
+    switch (Model.User.Gender)
+    {
+        case ChatApp.Domain.Enums.Gender.Male:
+            avatarSrc = "~/imgs/male.png";
+            break;
+
+        case ChatApp.Domain.Enums.Gender.Female:
+            avatarSrc = "~/imgs/female.png";
+            break;
+
+        default:
+            avatarSrc = "~/imgs/user.png";
+            break;
+    }
+
+}
+
+<div class="chat" id="chatPage">
+
+    <div class="chat-header clearfix pb-2 mb-4 border-bottom border-secondary-subtle">
+        <div class="row">
+            <div class="col-lg-6">
+                <a href="javascript:void(0);">
+                    <img src="@avatarSrc" " alt="avatar">
+                </a>
+                <div class="chat-about">
+                    <h6 class="m-b-0">${response.name}</h6>
+                    <small>Last seen: 2 hours ago</small>
+                </div>
+            </div>
+            <div class="col-lg-6 hidden-sm">
+                <div class="float-end">
+                    <a href="javascript:void(0);" class="btn btn-outline-info">
+                        <i class="fa-solid fa-bars"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="chat-history" style="height: 430px; overflow-y: auto;">
+        <ul class="m-b-0" id="messagesList">
+            <!-- Messages will be appended here -->
+        </ul>
+    </div>
+    <div class="chat-message clearfix">
+        <div class="input-group mb-0">
+            <input id="sender" type="hidden" value="" />
+            <input id="receiver" type="hidden" value="${response.id}" />
+            <input id="messageInput" type="text" class="form-control" placeholder="Enter text here" />
+            <button id="sendButton" class="btn btn-outline-info" type="button">
+                <i class="fa-solid fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+</div>
