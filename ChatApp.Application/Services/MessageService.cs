@@ -1,9 +1,11 @@
 using ChatApp.Application.DTOs;
+using ChatApp.Application.DTOs.Auth;
 using ChatApp.Application.DTOs.Message;
 using ChatApp.Application.Interfaces;
 using ChatApp.Application.Interfaces.Repositories;
 using ChatApp.Application.Mappings;
 using ChatApp.Domain.Entities;
+using ChatApp.Domain.Enums;
 
 namespace ChatApp.Application.Services;
 
@@ -29,10 +31,16 @@ public class MessageService : IMessage
     return dtoList;
   }
 
-  public async Task SendMessage(MessageRequest request)
+  public async Task<MessageResponse> SendMessage(MessageRequest request)
   {
     Message msg = request.Entity();
-    await _messageRepository.AddMessage(msg);
+    var res = await _messageRepository.AddMessage(msg);
+
+    if (res == CrudResults.Success)
+    {
+      return new MessageResponse().SuccessMessage("Send message success");
+    }
+    return new MessageResponse().ErrorMessage("cannot send message. failed");
   }
 
 }

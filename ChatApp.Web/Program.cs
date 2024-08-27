@@ -1,7 +1,6 @@
 using ChatApp.Infrastructure.Cache;
 using ChatApp.Infrastructure.Db;
 using ChatApp.Web;
-using ChatApp.Web.Hubs;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,7 +31,6 @@ try
 
   // Add services to the container.
   builder.Services.AddControllersWithViews();
-  builder.Services.AddSignalR();
 
   //Add mongodb
   builder.Services.AddScoped(opt =>
@@ -66,8 +64,6 @@ try
   app.MapControllerRoute(
       name: "default",
       pattern: "{controller=Auth}/{action=Login}/{id?}");
-
-  app.MapHub<ChatHub>("/chatHub");
 
   app.Run();
 

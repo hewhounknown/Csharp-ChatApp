@@ -81,32 +81,60 @@
                         
                         $('#chatPage').html($page);
 
-                        initSignalR();
+                        $('#sendButton').on('click', function () {
+                            const senderId = $('#sender').val();
+                            const receiverId = $('#receiver').val();
+                            const message = $('#messageInput').val();
+
+                            const _msgReq = {
+                                Content: message,
+                                MessageType: 0,
+                                SenderId: senderId,
+                                ReceiverId: receiverId,
+                            };
+
+                            $.ajax({
+                                type: 'POST',
+                                url: '/Chat/SendMessage',
+                                data: {model : _msgReq},
+                                dataType: 'JSON',
+                                success: function (result) {
+                                    console.log(result)
+                                }
+                            })
+                        })
+
                     }
                 })
-            });
+
+
+             });
 
             function initSignalR() {
                 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
-                // Disable the send button until connection is established.
+                // Disable the send button until the connection is established.
                 document.getElementById("sendButton").disabled = true;
 
                 connection.on("ReceiveMessage", function (sender, message) {
+                    console.log("Message received from:", sender);  // Debugging line
+                    console.log("Message content:", message);       // Debugging line
+
                     const msg = document.createElement("li");
                     msg.classList.add('clearfix');
                     msg.innerHTML = `
-                                <div class="message-data">
-                                    <span class="message-data-time">${sender}</span>
-                                </div>
-                                <div class="message my-message">${message}</div>`;
+                <div class="message-data">
+                    <span class="message-data-time">${sender}</span>
+                </div>
+                <div class="message my-message">${message}</div>`;
                     document.getElementById("messagesList").appendChild(msg);
                 });
 
                 connection.start().then(function () {
+                    console.log("Connection started");  // Debugging line
                     document.getElementById("sendButton").disabled = false;
                 }).catch(function (err) {
-                    return console.error(err.toString());
+                    console.error("Connection error:", err.toString());  // Debugging line
                 });
 
                 document.getElementById("sendButton").addEventListener("click", function (event) {
@@ -114,16 +142,22 @@
                     const receiver = document.getElementById("receiver").value;
                     const message = document.getElementById("messageInput").value;
 
-                    if (message.trim() === "") return;  // Prevent empty messages
+                    if (message.trim() === "") {
+                        console.warn("Empty message, not sending.");  // Debugging line
+                        return;  // Prevent empty messages
+                    }
+
+                    console.log("Sending message:", message);  // Debugging line
 
                     connection.invoke("SendMessage", sender, receiver, message).catch(function (err) {
-                        return console.error(err.toString());
+                        console.error("Error sending message:", err.toString());  // Debugging line
                     });
 
                     document.getElementById("messageInput").value = "";
 
                     event.preventDefault();
                 });
+
 
             }
         });

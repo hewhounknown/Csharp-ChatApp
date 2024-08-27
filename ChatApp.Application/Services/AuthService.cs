@@ -41,12 +41,11 @@ public class AuthService : IAuth
     }
 
     var res = await _userRepository.CreateAccount(request.Entity());
-    if (res == CrudResults.Fail)
+    if (res == CrudResults.Success)
     {
-      return new MessageResponse().ErrorMessage("something wrong, can't create account!");
+      return new MessageResponse().SuccessMessage("registered successful");
     }
-
-    return new MessageResponse().SuccessMessage("registered successful");
+    return new MessageResponse().ErrorMessage("something wrong, can't create account!");
   }
 
 }
